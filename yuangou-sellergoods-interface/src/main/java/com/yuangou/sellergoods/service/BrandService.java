@@ -1,6 +1,7 @@
 package com.yuangou.sellergoods.service;
 
 import com.yuangou.pojo.TbBrand;
+import entity.PageResult;
 
 import java.util.List;
 
@@ -12,4 +13,17 @@ import java.util.List;
 public interface BrandService {
 
     List<TbBrand> findAll();
+
+    PageResult findPage(int pageNum, int pageSize);
+
+    void addBrand(TbBrand tbBrand);
+
+    int update(TbBrand tbBrand);
+
+    TbBrand findOne(Long id);
+
+    void delete(Long[] ids);
+
+    PageResult findPage(TbBrand brand, int pageNum, int pageSize);
+
 }
