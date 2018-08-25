@@ -13,123 +13,10 @@
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/plugins/angularjs/angular.min.js"></script>
     <script src="../js/plugins/angularjs/pagination.js"></script>
+    <script src="../js/base_pagination.js"></script>
+    <script src="../js/service/brandService.js"></script>
+    <script src="../js/brandController/brandController.js"></script>
     <link rel="stylesheet" href="../js/plugins/angularjs/pagination.css">
-
-    <script type="text/javascript">
-        var app = angular.module('yuangou', ['pagination']);
-        app.controller('brandController', function ($scope, $http) {
-            $scope.findAll = function () {
-                $http.get('../brand/findAll.do').success(
-                    function (response) {
-                        $scope.list = response;
-                    }
-                );
-            };
-            $scope.paginationConf = {
-                currentPage: 1,
-                totalItems: 10,
-                itemsPerPage: 10,
-                perPageOptions: [10, 20, 30, 40, 50],
-                onChange: function () {
-                    $scope.reloadList();
-                }
-            };
-
-            $scope.reloadList = function () {
-                //切换页码
-                $scope.search( $scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-            };
-
-            $scope.findPage = function (page, rows) {
-                $http.get('../brand/findPage.do?page=' + page + '&size=' + rows).success(
-                    function (response) {
-                        $scope.list = response.rows;
-                        $scope.paginationConf.totalItems = response.total;//更新总记录数
-                        $scope.select_all=false;
-                    }
-                );
-            };
-            //增加
-            $scope.save = function () {
-                var action = "";
-                if ($scope.entity.id) {
-                    action = "update"
-                } else {
-                    action = "add"
-                }
-                $http.post("../brand/" + action + ".do", $scope.entity).success(function (response) {
-                    if (response.success) {
-                        $scope.reloadList();
-                    } else {
-                        alert(response.message)
-                    }
-                })
-            };
-            //修改
-            $scope.findOne = function (id) {
-                $http({
-                    method: "POST",
-                    url: "../brand/findOne.do",
-                    params: {
-                        id: id
-                    }
-                }).success(function (res) {
-                    $scope.entity = res;
-                })
-            };
-            $scope.selectIds = [];
-            $scope.updateSelection = function ($event, id) {
-                if ($event.target.checked) {//如果是被选中,则增加到数组
-                    $scope.selectIds.push(id);
-                } else {
-                    var idx = $scope.selectIds.indexOf(id);
-                    $scope.selectIds.splice(idx, 1);//删除
-                    angular.forEach($scope.list, function (i) {
-                        i.checked = false;
-                    });
-                    $scope.selectIds = [];
-                    $scope.select_all = false;
-                }
-
-            };
-            $scope.dele = function () {
-                $http.get('../brand/delete.do?ids=' + $scope.selectIds).success(
-                    function (response) {
-                        if (response.success) {
-                            $scope.reloadList();//刷新列表
-                        }
-                    }
-                );
-            };
-            $scope.selectAll = function ($event) {
-                if($event.target.checked) {
-                    $scope.checked = [];
-                    angular.forEach($scope.list, function (i) {
-                        i.checked = true;
-                        $scope.selectIds.push(i.id);
-                    })
-                }else {
-                    angular.forEach($scope.list, function (i) {
-                        i.checked = false;
-                        $scope.selectIds = [];
-                    })
-                }
-            };
-            $scope.searchs={};//定义搜索对象
-            $scope.search=function(page,rows){
-                $http.post('../brand/search.do?page='+page+"&rows="+rows, $scope.searchs).success(
-                    function(response){
-                        $scope.paginationConf.totalItems=response.total;//总记录数
-                        $scope.list=response.rows;//给列表变量赋值
-                    }
-                );
-            }
-
-
-        });
-
-
-    </script>
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="yuangou" ng-controller="brandController">
 <!-- .box-body -->
@@ -149,7 +36,9 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i
+                            class="fa fa-trash-o"></i> 删除
+                    </button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -169,7 +58,8 @@
             <thead>
             <tr>
                 <th class="" style="padding-right:0px">
-                    <input id="selall" type="checkbox"  ng-model="select_all" ng-click="selectAll($event)" class="icheckbox_square-blue">
+                    <input id="selall" type="checkbox" ng-model="select_all" ng-click="selectAll($event)"
+                           class="icheckbox_square-blue">
                 </th>
                 <th class="sorting_asc">品牌ID</th>
                 <th class="sorting">品牌名称</th>
@@ -179,7 +69,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="brand in list">
-                <td><input type="checkbox" ng-model="brand.checked" ng-click="updateSelection($event,brand.id)" ></td>
+                <td><input type="checkbox" ng-model="brand.checked" ng-click="updateSelection($event,brand.id)"></td>
                 <td>{{brand.id}}</td>
                 <td>{{brand.name}}</td>
                 <td>{{brand.firstChar}}</td>
