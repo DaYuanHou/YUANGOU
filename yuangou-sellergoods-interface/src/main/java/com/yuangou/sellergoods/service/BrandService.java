@@ -4,6 +4,7 @@ import com.yuangou.pojo.TbBrand;
 import entity.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 烈日下的酋长
@@ -25,5 +26,7 @@ public interface BrandService {
     void delete(Long[] ids);
 
     PageResult findPage(TbBrand brand, int pageNum, int pageSize);
+
+    List<Map> selectOptionList();
 
 }

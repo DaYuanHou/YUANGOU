@@ -1,6 +1,7 @@
 package com.yuangou.sellergoods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuangou.pojo.TbSpecification;
 
@@ -66,5 +67,7 @@ public interface SpecificationService {
      * @return
      */
     PageResult findPage(TbSpecification specification, int pageNum, int pageSize);
+
+    List<Map> selectOptionList();
 
 }

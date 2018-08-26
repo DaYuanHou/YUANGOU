@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 烈日下的酋长
@@ -16,7 +17,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("brand")
+@RequestMapping("/brand")
 public class BrandController {
 
     @Reference
@@ -75,5 +76,9 @@ public class BrandController {
         return brandService.findPage(brand, page, rows);
     }
 
+    @RequestMapping("/selectOptionList")
+    public List<Map> selectOptionList() {
+        return brandService.selectOptionList();
+    }
 
 }

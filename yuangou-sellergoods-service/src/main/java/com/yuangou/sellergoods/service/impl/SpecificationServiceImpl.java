@@ -1,6 +1,7 @@
 package com.yuangou.sellergoods.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuangou.mapper.TbSpecificationOptionMapper;
 import com.yuangou.pojo.TbSpecificationOption;
@@ -136,4 +137,8 @@ public class SpecificationServiceImpl implements SpecificationService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Override
+    public List<Map> selectOptionList() {
+        return specificationMapper.selectOptionList();
+    }
 }
