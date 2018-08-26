@@ -6,7 +6,7 @@ import java.util.List;
 import com.yuangou.pojo.TbOrderItem;
 /**
  * 购物车对象
- * @author Administrator
+ * @author 烈日下的酋长
  *
  */
 public class Cart implements Serializable{

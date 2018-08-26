@@ -11,7 +11,7 @@ public class TbSpecificationOptionExample {
     protected List<Criteria> oredCriteria;
 
     public TbSpecificationOptionExample() {
-        oredCriteria = new ArrayList<Criteria>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
