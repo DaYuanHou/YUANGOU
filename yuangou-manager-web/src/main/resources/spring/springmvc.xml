@@ -25,7 +25,7 @@
 
 	<!-- 引用dubbo 服务 -->
 	<dubbo:application name="yuangou-manager-web" />
-	<dubbo:registry address="zookeeper://192.168.0.156:2181"/>
+	<dubbo:registry address="zookeeper://192.168.0.133:2181"/>
 	<dubbo:annotation package="com.yuangou.manager.controller" />
 
 </beans>
