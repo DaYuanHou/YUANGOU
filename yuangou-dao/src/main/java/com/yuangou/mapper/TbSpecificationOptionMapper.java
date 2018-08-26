@@ -27,4 +27,6 @@ public interface TbSpecificationOptionMapper {
     int updateByPrimaryKeySelective(TbSpecificationOption record);
 
     int updateByPrimaryKey(TbSpecificationOption record);
+
+    void deleteSpec(long id);
 }

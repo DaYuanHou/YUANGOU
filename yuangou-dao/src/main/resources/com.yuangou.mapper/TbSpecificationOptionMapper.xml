@@ -193,4 +193,7 @@
       orders = #{orders,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <delete id="deleteSpec">
+    delete from tb_specification_option where spec_id =#{id}
+  </delete>
 </mapper>
