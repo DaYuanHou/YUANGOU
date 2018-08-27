@@ -81,4 +81,9 @@ public class BrandController {
         return brandService.selectOptionList();
     }
 
+    @RequestMapping("/findSpecifications")
+    public List<Map> findSpecifications() {
+        return brandService.findSpecifications();
+    }
+
 }
