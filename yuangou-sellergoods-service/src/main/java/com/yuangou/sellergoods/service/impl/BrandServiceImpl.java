@@ -90,4 +90,10 @@ public class BrandServiceImpl implements BrandService {
     public List<Map> selectOptionList() {
         return brandMapper.selectOptionList();
     }
+
+    @Override
+    public List<Map> findSpecifications() {
+        return brandMapper.findSpecifications();
+    }
+
 }

@@ -29,4 +29,6 @@ public interface BrandService {
 
     List<Map> selectOptionList();
 
+    List<Map> findSpecifications();
+
 }
