@@ -10,7 +10,7 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
                 $scope.list = response;
             }
         );
-    }
+    };
 
     //分页
     $scope.findPage = function (page, rows) {
@@ -20,16 +20,19 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
                 $scope.paginationConf.totalItems = response.total;//更新总记录数
             }
         );
-    }
-
+    };
+    $scope.entity = {customAttributeItems: []};
     //查询实体
     $scope.findOne = function (id) {
         typeTemplateService.findOne(id).success(
             function (response) {
                 $scope.entity = response;
+                $scope.entity.brandIds = JSON.parse($scope.entity.brandIds);//转换品牌列表
+                $scope.entity.specIds = JSON.parse($scope.entity.specIds);//转换规格列表
+                $scope.entity.customAttributeItems = JSON.parse($scope.entity.customAttributeItems);//转换扩展属性;//转换扩展属性
             }
         );
-    }
+    };
 
     //保存
     $scope.save = function () {
@@ -63,10 +66,9 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
                 }
             }
         );
-    }
+    };
 
     $scope.searchEntity = {};//定义搜索对象
-
     //搜索
     $scope.search = function (page, rows) {
         typeTemplateService.search(page, rows, $scope.searchEntity).success(
@@ -85,7 +87,7 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
                 $scope.brandList = {data: response};
             }
         );
-    }
+    };
 
     $scope.findSpec = function () {
         brandService.findSpecifications().success(
@@ -96,12 +98,27 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
     };
 
     //新增扩展属性
-    $scope.addTableRow=function(){
+    $scope.addTableRow = function () {
         $scope.entity.customAttributeItems.push({});
-    }
-    $scope.deleTableRow=function(index){
-        $scope.entity.customAttributeItems.splice(index,1);//删除
-    }
+    };
+    $scope.deleTableRow = function (index) {
+        $scope.entity.customAttributeItems.splice(index, 1);//删除
+    };
 
+
+    $scope.selectAllItems = function ($event) {
+        if ($event.target.checked) {
+            $scope.checked = [];
+            angular.forEach($scope.entity.customAttributeItems, function (i) {
+                i.checked = true;
+                $scope.selectIds.push(i.id);
+            })
+        } else {
+            angular.forEach($scope.entity.customAttributeItems, function (i) {
+                i.checked = false;
+                $scope.selectIds = [];
+            })
+        }
+    };
 
 });
